@@ -3,16 +3,16 @@ Transformer Modules
 """
 
 from __future__ import annotations
-from typing import Optional, Any
-from . import relu, layer_norm, dropout, LayerRef, Module, ModuleList, Linear
+from typing import Optional, Any, Union
+from . import relu, layer_norm, dropout, LayerRef, Module, ModuleList, Linear, activation
 
 
 class TransformerEncoderLayer(Module):
   """
   Defines one layer of a standard transformer encoder
   """
-  def __init__(self, d_model, nhead, dim_feedforward=2048, drop=0.1, act=relu, layer_norm_eps=1e-5,
-               norm_first=False) -> None:
+  def __init__(self, d_model: int, nhead: int, dim_feedforward: int = 2048, drop: float = 0.1, act: activation = relu,
+               layer_norm_eps: float = 1e-5, norm_first: bool = False) -> None:
     """
     :param d_model: hidden dim
     :param nhead: number heads
@@ -62,7 +62,8 @@ class TransformerEncoder(Module):
   """
   Defines the full Encoder of the standard transformer
   """
-  def __init__(self, encoder_layer, num_layers, normalization=None, norm_eps: float = 1e-5):
+  def __init__(self, encoder_layer: Union[TransformerEncoderLayer, Any], num_layers: int, normalization=None,
+               norm_eps: float = 1e-5):
     """
     :param encoder_layer:
     :param num_layers:
@@ -95,7 +96,8 @@ class TransformerDecoderLayer(Module):
   """
   Defines one layer of a standard transformer decoder
   """
-  def __init__(self, d_model, nhead, dim_feedforward=2048, drop=0.1, act=relu, layer_norm_eps=1e-5, norm_first=False):
+  def __init__(self, d_model: int, nhead: int, dim_feedforward: int = 2048, drop: float = 0.1, act: activation = relu,
+               layer_norm_eps: float = 1e-5, norm_first: bool = False):
     """
     :param d_model: hidden dim
     :param nhead: number heads
@@ -153,7 +155,8 @@ class TransformerDecoder(Module):
   """
   Defines the full Decoder of the standard transformer
   """
-  def __init__(self, decoder_layer, num_layers, normalization=None, norm_eps: float = 1e-5):
+  def __init__(self, decoder_layer: Union[TransformerDecoderLayer, Any], num_layers: int, normalization=None,
+               norm_eps: float = 1e-5):
       """
       :param decoder_layer:
       :param num_layers:
@@ -187,7 +190,7 @@ class Transformer(Module):
   """
   def __init__(self, d_model: int = 512, nhead: int = 8, num_encoder_layers: int = 6,
                num_decoder_layers: int = 6, dim_feedforward: int = 2048, drop: float = 0.1,
-               act=relu, custom_encoder: Optional[Any] = None, custom_decoder: Optional[Any] = None,
+               act: activation = relu, custom_encoder: Optional[Any] = None, custom_decoder: Optional[Any] = None,
                layer_norm_eps: float = 1e-5) -> None:
     super().__init__()
 
