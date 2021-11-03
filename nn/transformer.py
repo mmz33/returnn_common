@@ -3,12 +3,8 @@ Transformer Modules
 """
 
 from __future__ import annotations
-from .base import Module, LayerRef
-from .math_ import relu
-from ._generated_layers import Linear, layer_norm
-from .utils import dropout
-from .container import ModuleList
 from typing import Optional, Any
+from . import relu, layer_norm, dropout, LayerRef, Module, ModuleList, Linear
 
 
 class TransformerEncoderLayer(Module):
