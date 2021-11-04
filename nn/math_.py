@@ -50,3 +50,8 @@ def sigmoid(x: LayerRef) -> Layer:
 def swish(x: LayerRef) -> Layer:
   """swish"""
   return activation(x, activation="swish")
+
+
+def glu(x: LayerRef) -> Layer:
+  """GLU"""
+  return activation(x, activation='glu')
